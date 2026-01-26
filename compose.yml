@@ -1,0 +1,9 @@
+services:
+  zephyr:
+    user: "${HOST_UID}:${HOST_GID}"
+    build: .
+    image: zephyr-dev-setup:1.0
+    working_dir: /workdir
+    volumes:
+      - ./:/workdir
+    command: sleep infinity
