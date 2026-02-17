@@ -1,0 +1,16 @@
+{
+  "name": "Zephyr Apps",
+  "dockerComposeFile": "../compose.yml",
+  "service": "zephyr",
+  "workspaceFolder": "/workdir",
+  "shutdownAction": "stopCompose",
+  "remoteUser": "root",
+  "privileged": true,
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash"
+      }
+    }
+  }
+}
