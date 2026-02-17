@@ -1,5 +1,5 @@
 # Dockerfile
-FROM ghcr.io/zephyrproject-rtos/zephyr-build:main
+FROM ghcr.io/zephyrproject-rtos/zephyr-build:v0.28.7
 
 # Temporarily become root to install packages
 USER root
