@@ -1,7 +1,7 @@
 {
   "name": "Zephyr Apps",
   "dockerComposeFile": "../compose.yml",
-  "service": "zephyr",
+  "service": "zephyr_apps",
   "workspaceFolder": "/workdir",
   "shutdownAction": "stopCompose",
   "remoteUser": "root",
@@ -12,5 +12,11 @@
         "terminal.integrated.defaultProfile.linux": "bash"
       }
     }
+  },
+  "mounts": [
+    "source=${localEnv:SSH_AUTH_SOCK},target=/ssh-agent,type=bind"
+  ],
+  "remoteEnv": {
+    "SSH_AUTH_SOCK": "/tmp/ssh-XXXXXXn9szK2/agent.35679"
   }
 }

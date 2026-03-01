@@ -1,9 +1,10 @@
 services:
-  zephyr:
+  zephyr_apps:
     user: "${HOST_UID}:${HOST_GID}"
     build: .
     image: zephyr-dev-setup:1.0
     working_dir: /workdir
     volumes:
-      - $HOME/work/zephyrproject:/workdir
+      - $HOME/git/zephyr-apps:/workdir
+      - $HOME/.ssh:/root/.ssh:ro \
     command: sleep infinity
