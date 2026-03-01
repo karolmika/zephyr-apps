@@ -5,6 +5,6 @@ services:
     image: zephyr-dev-setup:1.0
     working_dir: /workdir
     volumes:
-      - $HOME/git/zephyr-apps:/workdir
-      - $HOME/.ssh:/root/.ssh:ro \
+      - ./:/workdir 
+      - $HOME/.ssh:/root/.ssh:ro # Mount SSH keys for git access
     command: sleep infinity
