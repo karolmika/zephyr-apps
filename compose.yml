@@ -5,5 +5,5 @@ services:
     image: zephyr-dev-setup:1.0
     working_dir: /workdir
     volumes:
-      - ./:/workdir
+      - $HOME/work/zephyrproject:/workdir
     command: sleep infinity
