@@ -1,6 +1,8 @@
 #include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
 #include <zephyr/random/random.h>
+#include <string.h>
+#include <stdio.h>
 
 LOG_MODULE_REGISTER(producer, LOG_LEVEL_INF);
 
@@ -38,25 +40,51 @@ const char *city_database[]= {
 /*-------------------------------------
  * PRIVATE FUNCTION PROTOTYPES
  *-----------------------------------*/
-static uint32_t generate_number(uint32_t min, uint32_t max);
+/**
+ * @brief Generates a random number between min and max (inclusive) that is different from prev_value.
+ * This is used to ensure that the producer selects a different city each time.
+ * @param min The minimum value of the random number (inclusive).
+ * @param max The maximum value of the random number (inclusive).
+ * @param prev_value The previous value to avoid returning.
+ * @return A random number between min and max that is different from prev_value.
+ */
+static uint32_t generate_unique_number(uint32_t min, uint32_t max, uint32_t prev_value);
 
 void producer_thread_fn(void *, void *, void *)
 {
-    uint32_t rnd = generate_number(FIRST_ELEMENT, NUM_OF_CITIES - 1);
+    uint32_t rnd = 0;
+    uint32_t prev_rnd = 0;
 
     /* Msg queue data*/
     char city_name[MAX_CITY_NAME_LENGTH + 1] = {0};   
     
     LOG_INF("Producer thread started!");
+
+    int put_counter = 50; // Counter to limit the number of messages produced for testing
+    bool producing = true;
+    int loop_cnt = 0;
     
     while(1)
     {
+        int result = 0;
         LOG_INF("-------------------");
-        LOG_INF("Selected city: %s", city_database[rnd]);
-        memset(city_name, 0, sizeof(city_name));
-        memcpy(city_name, city_database[rnd], strlen(city_database[rnd]));
-        int result = k_msgq_put(&msg_queue, city_name, K_SECONDS(5));
-        LOG_INF("k_msgq_put result: %d", result);
+        if (put_counter-- >= 0) 
+        {
+            LOG_INF("Selected city: %s", city_database[rnd]);
+            memset(city_name, 0, sizeof(city_name));
+            // Format the city name with loop count to make it unique for testing
+            snprintf(city_name, sizeof(city_name), "%d-%s", loop_cnt, city_database[rnd]);
+            result = k_msgq_put(&msg_queue, city_name, K_SECONDS(5));
+            if( 0 != result) {
+                LOG_INF("k_msgq_put error: %d", result);
+            }
+        }
+        else {
+            if(producing) {
+                LOG_INF("Producer has finished producing messages.");
+                producing = false;
+            }
+        }
 
         int offset = 0;
         for (int i = 0; i < NUM_OF_CITIES; i++) {
@@ -72,7 +100,8 @@ void producer_thread_fn(void *, void *, void *)
         k_sleep(K_SECONDS(PRODUCER_THREAD_INTERVAL_IN_SECONDS));
 
         // Search for new number to select new city
-        rnd = generate_number(FIRST_ELEMENT, NUM_OF_CITIES - 1);
+        rnd = generate_unique_number(FIRST_ELEMENT, NUM_OF_CITIES - 1, prev_rnd);
+        loop_cnt++;
     }
 }
 
@@ -80,7 +109,11 @@ void producer_thread_fn(void *, void *, void *)
  * PRIVATE FUNCTION DEFINITIONS
  *-----------------------------------*/
 
-static uint32_t generate_number(uint32_t min, uint32_t max) 
+static uint32_t generate_unique_number(uint32_t min, uint32_t max, uint32_t prev_value) 
 {
-    return min + (sys_rand32_get() % (max - min + 1));
+    uint32_t rnd;
+    do {
+        rnd = min + (sys_rand32_get() % (max - min + 1));
+    } while (rnd == prev_value);
+    return rnd;
 } 
