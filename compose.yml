@@ -6,5 +6,5 @@ services:
     working_dir: /workdir
     volumes:
       - ./:/workdir 
-      - -v $HOME/.ssh:/root/.ssh:ro # Mount SSH keys for git access
+      - $HOME/.ssh:/root/.ssh:ro # Mount SSH keys for git access
     command: sleep infinity
