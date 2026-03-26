@@ -1,0 +1,11 @@
+{
+  "configurations": [
+    {
+      "name": "Zephyr",
+      "compileCommands": "${workspaceFolder}/build_msg_queues/compile_commands.json",
+      "intelliSenseMode": "linux-gcc-x64",
+      "cStandard": "c11"
+    }
+  ],
+  "version": 4
+}
