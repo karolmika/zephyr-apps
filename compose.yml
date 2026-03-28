@@ -2,9 +2,9 @@ services:
   zephyr_apps:
     user: "${HOST_UID}:${HOST_GID}"
     build: .
-    image: zephyr-dev-setup:1.0
+    image: zephyr-dev-setup:1.1
     working_dir: /workdir
     volumes:
       - ./:/workdir 
-      - $HOME/.ssh:/root/.ssh:ro # Mount SSH keys for git access
-    command: sleep infinity
+      - $HOME/.ssh:/root/.ssh:ro # Mount SSH keys for git access    devices:
+      - /dev/bus/usb    command: sleep infinity
