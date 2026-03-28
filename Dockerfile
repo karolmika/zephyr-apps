@@ -18,11 +18,18 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN pip3 install --no-cache-dir \
     west \
     gcovr \
-    pytest \
-    nrfutil
+    pytest
+
+# Download and install nrfutil binary
+RUN wget -O /usr/local/bin/nrfutil "https://files.nordicsemi.com/ui/api/v1/download?repoKey=swtools&path=external/nrfutil/executables/x86_64-unknown-linux-gnu/nrfutil&isNativeBrowsing=false" && \
+    chmod +x /usr/local/bin/nrfutil
+
+# Install nrfutil device tools
+RUN nrfutil install device
 
 # Quality-of-life: make sure locale etc. if you need it (optional)
 ENV LANG=C.UTF-8
+ENV PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python
 
 # Go back to the original non-root user (often "user")
 USER user
