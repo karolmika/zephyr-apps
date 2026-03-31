@@ -24,8 +24,21 @@ docker compose --file compose.yml config
 
 # Possible problems
 
-Fix to not able to save file edited in VS Code:
+Fix to not able to save file edited in VS Code. 
+
 
 ```
 sudo chown -R user /workdir/
+```
+
+Error "detected dubious ownership":
+
+```
+git config --global --add safe.directory /workdir
+```
+
+Check if the NRF board is connected and can be discovered:
+
+```
+nrfutil device list
 ```

@@ -12,6 +12,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     clang-format \
     clang-tidy \
     gdb-multiarch \
+    picocom \
+    libusb-1.0-0 \
     && rm -rf /var/lib/apt/lists/*
 
 # (Optional) Python tools you want globally available in the container
@@ -26,6 +28,12 @@ RUN wget -O /usr/local/bin/nrfutil "https://files.nordicsemi.com/ui/api/v1/downl
 
 # Install nrfutil device tools
 RUN nrfutil install device
+
+# Install SEGGER J-Link
+COPY JLink_Linux_V924a_x86_64 /opt/SEGGER/JLink_Linux_V924a_x86_64
+RUN ln -sfn /opt/SEGGER/JLink_Linux_V924a_x86_64 /opt/SEGGER/JLink
+ENV PATH="/opt/SEGGER/JLink_Linux_V924a_x86_64:${PATH}"
+ENV LD_LIBRARY_PATH="/opt/SEGGER/JLink:${LD_LIBRARY_PATH}"
 
 # Quality-of-life: make sure locale etc. if you need it (optional)
 ENV LANG=C.UTF-8
