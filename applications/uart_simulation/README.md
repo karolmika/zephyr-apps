@@ -15,7 +15,7 @@ west build -p always applications/uart_simulation/ --board native_sim --build-di
 Build command for `nrf5340dk/nrf5340/cpuapp` target:
 
 ```
-west build -p always applications/uart_simulation/ --board nrf5340dk/nrf5340/cpuapp --build-dir build_uart_sim
+west build -S cdc-acm-console -p always applications/uart_simulation/ --board nrf5340dk/nrf5340/cpuapp --build-dir build_uart_sim
 ```
 
 ## Running the app
@@ -24,6 +24,12 @@ To run `native_sim` target application run exe file:
 
 ```
 ./build_uart_sim/zephyr/zephyr.exe
+```
+
+In order to use shell terminal, add `-uart_stdinout`
+
+```
+./build_uart_sim/zephyr/zephyr.exe -uart_stdinout
 ```
 
 # Testing nativ sim target
