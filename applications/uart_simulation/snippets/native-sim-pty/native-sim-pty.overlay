@@ -1,0 +1,7 @@
+/*
+ * Ensure uart0 is not bound to stdin/stdout and uses its own PTY.
+ */
+
+&uart0 {
+	/delete-property/ on-stdinout;
+};

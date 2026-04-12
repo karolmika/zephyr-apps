@@ -2,9 +2,17 @@ services:
   zephyr_apps:
     user: "${HOST_UID}:${HOST_GID}"
     build: .
-    image: zephyr-dev-setup:1.0
+    image: zephyr-dev-setup:1.1
     working_dir: /workdir
     volumes:
-      - ./:/workdir 
-      - $HOME/.ssh:/root/.ssh:ro # Mount SSH keys for git access
+      - ./:/workdir
+      - $HOME/.ssh:/root/.ssh:ro
+      - /home/karol/downloads:/downloads
+    devices:
+      - /dev/bus/usb
+      - /dev/ttyACM0:/dev/ttyACM0
+      - /dev/ttyACM1:/dev/ttyACM1
+    privileged: true
+    group_add:
+      - dialout
     command: sleep infinity
