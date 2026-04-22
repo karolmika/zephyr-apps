@@ -1,0 +1,7 @@
+/*
+ * Enable stdin/stdout binding for native_sim UART so runtime flag is not needed.
+ */
+
+&uart0 {
+	on-stdinout;
+};

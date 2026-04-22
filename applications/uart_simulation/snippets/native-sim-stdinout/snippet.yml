@@ -1,0 +1,3 @@
+name: native-sim-stdinout
+append:
+  EXTRA_DTC_OVERLAY_FILE: native-sim-stdinout.overlay
