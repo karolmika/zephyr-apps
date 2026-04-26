@@ -6,5 +6,6 @@ project(hello_cpp_world)
 target_sources(app PRIVATE 
     src/main.cpp
     src/s4_challenge.cpp
+    src/s7_challenge.cpp
 )
 target_include_directories(app PRIVATE include)
