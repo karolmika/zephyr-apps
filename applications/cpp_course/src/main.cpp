@@ -7,6 +7,7 @@
 #include <iostream>
 #include "s4_challenge.hpp"
 #include "s7_challenge.hpp"
+#include "s10_challenge.hpp"
 
 int main(void)
 {
@@ -14,7 +15,11 @@ int main(void)
 
     /* Run Section 4 Challenge */
 	// favorite_number_challenge();
+
 	/* Run Section 7 Challenge */
-	vectors_challenge();
+	// vectors_challenge();
+
+	/* Run Section 10 Challenge */
+	cipher_challenge();
 	return 0;
 }
