@@ -7,6 +7,7 @@ target_sources(app PRIVATE
     src/main.cpp
     src/s4_challenge.cpp
     src/s7_challenge.cpp
+    src/s9_challenge.cpp
     src/s10_challenge.cpp
 )
 target_include_directories(app PRIVATE include)
