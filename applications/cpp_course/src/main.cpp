@@ -9,6 +9,7 @@
 #include "s7_challenge.hpp"
 #include "s9_challenge.hpp"
 #include "s10_challenge.hpp"
+#include "s12_challenge.hpp"
 
 int main(void)
 {
@@ -21,10 +22,15 @@ int main(void)
 	// vectors_challenge();
 
 	/* Run Section 9 Challenge */
-	run_list_challenge();
+	//run_list_challenge();
 
 	/* Run Section 10 Challenge */
 	// cipher_challenge();
+
+	/* Run Section 10 Challenge */
+	multiply_arrays();
+
+	exit(0);
 
 	return 0;
 }
