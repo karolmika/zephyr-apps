@@ -1,0 +1,10 @@
+tests:
+  application.s13_challenge:
+    tags:
+      - unit
+      - cpp
+    platform_allow:
+      - native_sim
+    integration_platforms:
+      - native_sim
+    harness: ztest
