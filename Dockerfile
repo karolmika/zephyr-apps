@@ -26,14 +26,20 @@ RUN pip3 install --no-cache-dir \
 RUN wget -O /usr/local/bin/nrfutil "https://files.nordicsemi.com/ui/api/v1/download?repoKey=swtools&path=external/nrfutil/executables/x86_64-unknown-linux-gnu/nrfutil&isNativeBrowsing=false" && \
     chmod +x /usr/local/bin/nrfutil
 
-# Install nrfutil device tools
-RUN nrfutil install device
+# Install nrfutil device tools, retrying transient bootstrap download failures.
+RUN for attempt in 1 2 3; do \
+    nrfutil install device && exit 0; \
+    if [ "$attempt" -lt 3 ]; then \
+        echo "nrfutil install failed; retrying (attempt $((attempt + 1))/3)..." >&2; \
+        sleep "$((attempt * 10))"; \
+    fi; \
+done; \
+echo "Unable to install nrfutil device after 3 attempts." >&2; \
+exit 1
 
-# Install SEGGER J-Link
-COPY JLink_Linux_V924a_x86_64 /opt/SEGGER/JLink_Linux_V924a_x86_64
-RUN ln -sfn /opt/SEGGER/JLink_Linux_V924a_x86_64 /opt/SEGGER/JLink
-ENV PATH="/opt/SEGGER/JLink_Linux_V924a_x86_64:${PATH}"
-ENV LD_LIBRARY_PATH="/opt/SEGGER/JLink:${LD_LIBRARY_PATH}"
+# J-Link is supplied through the /downloads runtime mount when needed.
+ENV PATH="/downloads/JLink_Linux_V924a_x86_64:${PATH}"
+ENV LD_LIBRARY_PATH="/downloads/JLink_Linux_V924a_x86_64"
 
 # Quality-of-life: make sure locale etc. if you need it (optional)
 ENV LANG=C.UTF-8

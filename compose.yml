@@ -2,8 +2,10 @@ services:
   zephyr_apps:
     user: "${HOST_UID}:${HOST_GID}"
     build: .
-    image: zephyr-dev-setup:1.1
+    image: zephyr-dev-setup:1.2
     working_dir: /workdir
+    environment:
+      ZEPHYR_REVISION: v4.2.0
     volumes:
       - ./:/workdir
       - $HOME/.ssh:/root/.ssh:ro
