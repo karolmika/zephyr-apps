@@ -14,7 +14,8 @@ I use common build directory for all other application in the workspace. The stu
 `build_common/<app_name>/<board>/` so for example to build `s13_challenge` application for `native_sim` board:
 
 ```
-west build -p always applications/s13_challenge/ --board native_sim --build-dir build_common/s13_challenge/native_sim/
+west build -p always applications/s13_challenge
+/ --board native_sim --build-dir build_common/s13_challenge/native_sim/
 ```
 # The Challenge
 

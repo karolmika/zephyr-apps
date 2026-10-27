@@ -21,4 +21,8 @@ public:
     void set_count(int cnt) {
         count = cnt;
     }
+
+    void inc_count() {
+        count = count+1;
+    }
 };

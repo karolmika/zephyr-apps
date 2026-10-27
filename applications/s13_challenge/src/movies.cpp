@@ -2,13 +2,16 @@
 #include <string>
 #include "Movies.hpp"
 
-void Movies::add_movie(Movie m) {
-    if(NULL != get_movie(m.get_name())) {
-        std::cout << "ERROR: Movie already exists." << std::endl;
+int Movies::add_movie(const std::string& name, int rate, int count) {
+    for (Movie movie: movies) {
+        if (name == movie.get_name()) {
+            return -1;
+        }
     }
-    else {
-        movies.push_back(m);
-    }
+
+    Movie m{name, rate, count};
+    movies.push_back(m);
+    return 0;
 }
 
 Movie* Movies::get_movie(const std::string& name) {
@@ -26,8 +29,25 @@ void Movies::inc_watch_count(const std::string& name) {
     Movie* movie = get_movie(name);
 
     if (movie != nullptr) {
-        movie->set_count(movie->get_count() + 1);
+        movie->inc_count();
     } else {
         std::cout << "ERROR: Movie with given name {" << name << "} is not on the list." << std::endl;
     }
+}
+
+std::string Movies::display(void) {
+    std::string movies_names {};
+    int s = this->movies.size();
+    int cnt = 0;
+
+    for (auto it = this->movies.begin(); it != this->movies.end(); ++it) {
+        if (++cnt != s) {
+            movies_names += ( it->get_name() + ", ");
+        }
+        else {
+            movies_names += it->get_name();
+        }
+
+    }
+    return movies_names;
 }
